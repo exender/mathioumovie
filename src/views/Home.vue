@@ -7,7 +7,7 @@
       <h1 class="text-4xl font-bold text-white mb-8">Les 100 films les plus populaires</h1>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <!-- Afficher la liste des films -->
-        <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie" class="mb-4" />
+        <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie" class="mb-4" @click="viewMovieDetails(movie.id)" />
       </div>
     </div>
   </div>
@@ -15,7 +15,7 @@
 
 <script>
 import axios from 'axios';
-import MovieCard from '../MovieCard.vue';
+import MovieCard from '../components/MovieCard.vue';
 
 export default {
   name: 'Home',
@@ -36,6 +36,12 @@ export default {
       .catch(error => {
         console.error(error);
       });
+  },
+  methods: {
+    viewMovieDetails(movieId) {
+      // Naviguer vers la page MovieDetails.vue en utilisant Vue Router
+      this.$router.push({ name: 'MovieDetails', params: { id: movieId } });
+    }
   }
 };
 </script>
@@ -53,6 +59,4 @@ export default {
 .text-white {
   color: #fff;
 }
-
-/* Style pour la grille de films */
 </style>

@@ -1,6 +1,13 @@
-import { createApp } from 'vue'
-import App from './App.vue'
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router'; // Importez votre instance de Vue Router
+import './assets/main.css';
 
-import './assets/main.css'
+// Créez votre application Vue
+const app = createApp(App);
 
-createApp(App).mount('#app')
+// Utilisez l'instance de Vue Router dans votre application
+app.use(router);
+
+// Montez votre application Vue
+app.mount('#app');
