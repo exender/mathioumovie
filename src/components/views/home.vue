@@ -55,9 +55,4 @@ export default {
 }
 
 /* Style pour la grille de films */
-.grid {
-  /* Utiliser Grid Layout avec 2 colonnes sur petits écrans, 3 colonnes sur écrans moyens, 4 colonnes sur grands écrans */
-  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-}
-
 </style>

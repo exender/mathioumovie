@@ -1,13 +1,13 @@
 <template>
     <div class="bg-white shadow-md rounded-md overflow-hidden">
-      <!-- Afficher l'image du film -->
-      <img :src="getMoviePosterUrl(movie.poster_path)" :alt="movie.title" class="w-full h-64 object-cover" />
-  
-      <!-- Contenu de la carte -->
-      <div class="p-4">
-        <!-- Titre du film -->
-        <h2 class="text-xl font-semibold mb-2">{{ movie.title }}</h2>   
-      </div>
+        <!-- Afficher l'image du film -->
+        <img :src="getMoviePosterUrl(movie.poster_path)" :alt="movie.title" class="w-full h-64 object-cover" />
+
+        <!-- Contenu de la carte -->
+        <div class="p-4">
+            <!-- Titre du film -->
+            <h2>{{ movie.title }}</h2>
+        </div>
     </div>
 </template>
 
@@ -31,6 +31,8 @@ export default {
 
 <style scoped>
 /* Style personnalisé pour la carte de film */
+
+
 .bg-white {
     background-color: #fff;
 }

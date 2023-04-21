@@ -5,11 +5,13 @@ import Home from './components/views/home.vue'
 </script>
 
 <template>
-  <div><Header /></div>
-    <Home />
-  <div><Footer /></div>
+  <div>
+    <Header />
+  </div>
+  <Home />
+  <div>
+    <Footer />
+  </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
