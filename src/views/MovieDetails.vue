@@ -14,10 +14,12 @@
         <h2 class="text-xl font-bold mb-2">Acteurs :</h2>
         <div class="flex flex-wrap">
           <div v-for="actor in movie.credits.cast" :key="actor.id" class="w-1/4 flex flex-col items-center mb-4">
-            <img :src="'https://image.tmdb.org/t/p/w200/' + actor.profile_path" :alt="actor.name" class="w-16 h-16 rounded-full mb-2">
-            <p class="text-gray-800 text-center">{{ actor.name }}</p>
-            <p class="text-gray-600 text-center">{{ actor.character }}</p>
-          </div>
+  <img v-if="actor.profile_path" :src="'https://image.tmdb.org/t/p/w200/' + actor.profile_path" :alt="actor.name" class="w-16 h-16 rounded-full mb-2">
+  <svg v-else class="w-16 h-16 rounded-full mb-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="gray" d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 21c-5.238 0-9-3.762-9-9s3.762-9 9-9 9 3.762 9 9-3.762 9-9 9z"/></svg>
+  <p class="text-gray-800 text-center">{{ actor.name }}</p>
+  <p class="text-gray-600 text-center">{{ actor.character }}</p>
+</div>
+
         </div>
       </div>
     </div>
