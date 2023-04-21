@@ -6,10 +6,7 @@
       <!-- Contenu de la carte -->
       <div class="p-4">
         <!-- Titre du film -->
-        <h2 class="text-xl font-semibold mb-2">{{ movie.title }}</h2>
-  
-        <!-- Description du film -->
-        <p class="text-gray-500">{{ movie.overview }}</p>
+        <h2 class="text-xl font-semibold mb-2">{{ movie.title }}</h2>   
       </div>
     </div>
 </template>

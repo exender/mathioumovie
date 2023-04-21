@@ -1,19 +1,15 @@
 <template>
   <div class="bg-gray-900">
     <!-- En-tête -->
-  
 
     <!-- Contenu de la page -->
     <div class="container mx-auto py-8">
       <h1 class="text-4xl font-bold text-white mb-8">Les 100 films les plus populaires</h1>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <!-- Afficher la liste des films -->
-        <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie" />
+        <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie" class="mb-4" />
       </div>
     </div>
-
-    <!-- Pied de page -->
-
   </div>
 </template>
 
@@ -24,7 +20,6 @@ import MovieCard from '../MovieCard.vue';
 export default {
   name: 'Home',
   components: {
-
     MovieCard
   },
   data() {
@@ -34,7 +29,7 @@ export default {
   },
   mounted() {
     // Appeler l'API de TMDB pour récupérer les 100 films les plus populaires
-    axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=75e981bcdd819c45eea5057ee60c7c36&language=en-US&page=1`)
+    axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=75e981bcdd819c45eea5057ee60c7c36&language=fr-FR&page=1`)
       .then(response => {
         this.movies = response.data.results;
       })
