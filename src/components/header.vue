@@ -2,16 +2,20 @@
   <header class="bg-black text-white py-6">
     <div class="container mx-auto flex justify-between items-center">
       <h1 class="text-3xl font-bold">
-        <span class="text-red-600">MathiouMovie</span>
+        <router-link to="/">
+          <span class="text-red-600">MathiouMovie</span>
+        </router-link>
       </h1>
       <nav class="flex items-center">
-        <input v-model="searchTerm" @input="search" class="bg-gray-800 rounded-full px-6 py-3 mr-4 w-72 focus:outline-none" type="text" placeholder="Rechercher">
+        <input v-model="searchTerm" @input="search"
+          class="bg-gray-800 rounded-full px-6 py-3 mr-4 w-72 focus:outline-none" type="text" placeholder="Rechercher">
         <button @click="search" class="bg-red-600 text-white px-6 py-3 rounded-full font-bold">Rechercher</button>
       </nav>
     </div>
     <!-- Afficher les propositions de recherche sous forme de liste -->
     <ul v-if="searchResults.length > 0" class="absolute z-10 w-72 mt-2 bg-gray-800 text-white rounded-lg">
-      <li v-for="result in searchResults" :key="result.id" class="px-4 py-2 cursor-pointer hover:bg-gray-700" @click="goToMovieDetails(result.id)">{{ result.title }}</li>
+      <li v-for="result in searchResults" :key="result.id" class="px-4 py-2 cursor-pointer hover:bg-gray-700"
+        @click="goToMovieDetails(result.id)">{{ result.title }}</li>
     </ul>
   </header>
 </template>
@@ -46,7 +50,7 @@ export default {
     },
     goToMovieDetails(movieId) {
       // Rediriger vers la page de détails du film en utilisant Vue Router
-      router.push({ name: 'MovieDetails', params: { id: movieId }});
+      router.push({ name: 'MovieDetails', params: { id: movieId } });
     }
   }
 };
