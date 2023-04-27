@@ -36,90 +36,93 @@
   </template>
   
   <script>
-  import axios from "axios";
-  import MovieCard from "@/components/MovieCard.vue";
-  import Filtres from "@/components/Filtres.vue";
-  
-  export default {
-    name: "AllMovies",
-    components: {
-      MovieCard,
-      Filtres,
-    },
-    data() {
-  return {
-    movies: [],
-    sortBy: null,
-    page: 1,
-    total_pages: 1,
-    filteredMovies: [],
-  };
-},
+import axios from "axios";
+import MovieCard from "@/components/MovieCard.vue";
+import Filtres from "@/components/Filtres.vue";
 
-    mounted() {
-      this.loadPage(this.page);
-    },
-    methods: {
-      viewMovieDetails(movieId) {
-        this.$router.push(`/movie/${movieId}`);
-      },
-      sortByCategory(category) {
-        this.sortBy = category;
-        this.page = 1;
-        this.loadPage(this.page);
-      },
-      sortByAlphabeticalOrder() {
-        this.sortBy = "alphabetical-order";
-        this.page = 1;
-        this.loadPage(this.page);
-      },
-      loadPage(page) {
-  axios
-    .get(
-      `https://api.themoviedb.org/3/movie/popular?api_key=75e981bcdd819c45eea5057ee60c7c36&language=fr-FR&page=${page}`
-    )
-    .then((response) => {
-      this.movies = response.data.results;
-      this.total_pages = response.data.total_pages;
-      this.filteredMovies = this.movies;
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-},
-
-      loadPreviousPage() {
-        if (this.page > 1) {
-          this.page--;
-          this.loadPage(this.page);
-        }
-      },
-      loadNextPage() {
-        if (this.page < this.total_pages) {
-          this.page++;
-          this.loadPage(this.page);
-        }
-      },
-    },
-    computed: {
-      sortedMovies: function ()
-  
-  {
-  if (this.sortBy === "alphabetical-order") {
-  return this.movies.sort((a, b) =>
-  a.title.localeCompare(b.title, "fr")
-  );
-  } else if (this.sortBy === "release-date") {
-  return this.movies.sort(
-  (a, b) =>
-  new Date(b.release_date) - new Date(a.release_date)
-  );
-  } else if (this.sortBy === "rating") {
-  return this.movies.sort((a, b) => b.vote_average - a.vote_average);
-  } else {
-  return this.movies;
-  }
+export default {
+  name: "AllMovies",
+  components: {
+    MovieCard,
+    Filtres,
   },
+  data() {
+    return {
+      movies: [],
+      sortBy: null,
+      page: 1,
+      total_pages: 1,
+      filteredMovies: [],
+    };
   },
-  };
-  </script>
+  mounted() {
+    this.loadPage(this.page);
+  },
+  methods: {
+    viewMovieDetails(movieId) {
+      this.$router.push(`/movie/${movieId}`);
+    },
+    sortByCategory(category) {
+      this.sortBy = category;
+      this.filterMovies();
+    },
+    sortByAlphabeticalOrder() {
+      this.sortBy = "alphabetical-order";
+      this.filterMovies();
+    },
+    filterByCategory() {
+      if (this.sortBy) {
+        // filtrer les films en fonction de la catégorie sélectionnée
+        this.filteredMovies = this.movies.filter((movie) =>
+          movie.genre_ids.includes(parseInt(this.sortBy))
+        );
+      } else {
+        this.filteredMovies = this.movies;
+      }
+    },
+    filterMovies() {
+      if (this.sortBy === "alphabetical-order") {
+        // trier les films par ordre alphabétique
+        this.filteredMovies = this.movies.sort((a, b) => {
+          if (a.title < b.title) {
+            return -1;
+          }
+          if (a.title > b.title) {
+            return 1;
+          }
+          return 0;
+        });
+      } else {
+        this.filterByCategory();
+      }
+    },
+    loadPage(page) {
+      // Appeler l'API de TMDB pour récupérer les films de la page spécifiée
+      axios
+        .get(
+          `https://api.themoviedb.org/3/movie/popular?api_key=75e981bcdd819c45eea5057ee60c7c36&language=fr-FR&page=${page}`
+        )
+        .then((response) => {
+          this.movies = response.data.results;
+          this.total_pages = response.data.total_pages;
+          this.filterMovies();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    loadNextPage() {
+      if (this.page < this.total_pages) {
+        this.page++;
+        this.loadPage(this.page);
+      }
+    },
+    loadPreviousPage() {
+      if (this.page > 1) {
+        this.page--;
+        this.loadPage(this.page);
+      }
+    },
+  },
+};
+</script>
