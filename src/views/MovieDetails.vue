@@ -1,23 +1,50 @@
 <template>
   <div v-if="movie" class="flex flex-wrap">
     <div class="w-full md:w-1/2 lg:w-1/3 flex items-center justify-center">
-      <img :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path" :alt="movie.title" class="w-1/4 h-auto shadow-lg rounded-md">
+      <img
+        :src="'https://image.tmdb.org/t/p/w500/' + movie.poster_path"
+        :alt="movie.title"
+        class="w-1/4 h-auto shadow-lg rounded-md"
+      />
     </div>
 
     <div class="w-full md:w-1/2 lg:w-2/3 p-6">
       <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ movie.title }}</h1>
       <p class="text-gray-500 text-lg">{{ movie.release_date }}</p>
       <p class="text-gray-600 text-lg mt-4">{{ movie.overview }}</p>
-      <p class="text-gray-600 text-lg mt-4">Note moyenne : {{ movie.vote_average }}</p>
-      
+      <p class="text-gray-600 text-lg mt-4">
+        Note moyenne : {{ movie.vote_average }}
+      </p>
+
       <div class="mt-8">
         <h2 class="text-2xl font-bold text-gray-900 mb-4">Acteurs :</h2>
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          <div v-for="actor in movie.credits.cast" :key="actor.id" class="flex flex-col items-center">
+          <div
+            v-for="actor in movie.credits.cast"
+            :key="actor.id"
+            class="flex flex-col items-center"
+          >
             <router-link :to="{ name: 'ActorView', params: { id: actor.id } }">
-              <div class="w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
-                <img v-if="actor.profile_path" :src="'https://image.tmdb.org/t/p/w200/' + actor.profile_path" :alt="actor.name" class="w-full h-full object-cover">
-                <svg v-else class="w-16 h-16 text-gray-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 21c-5.238 0-9-3.762-9-9s3.762-9 9-9 9 3.762 9 9-3.762 9-9 9z"/></svg>
+              <div
+                class="w-32 h-32 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden"
+              >
+                <img
+                  v-if="actor.profile_path"
+                  :src="'https://image.tmdb.org/t/p/w200/' + actor.profile_path"
+                  :alt="actor.name"
+                  class="w-full h-full object-cover"
+                />
+                <svg
+                  v-else
+                  class="w-16 h-16 text-gray-500"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 21c-5.238 0-9-3.762-9-9s3.762-9 9-9 9 3.762 9 9-3.762 9-9 9z"
+                  />
+                </svg>
               </div>
             </router-link>
             <p class="text-gray-900 font-medium mt-2">{{ actor.name }}</p>
@@ -32,27 +59,29 @@
   </div>
 </template>
 
-
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
-  name: 'MovieDetails',
+  name: "MovieDetails",
   data() {
     return {
-      movie: null
+      movie: null,
     };
   },
   mounted() {
     // Récupérer les détails du film en utilisant l'API de TMDB et l'id passé en paramètre
-    axios.get(`https://api.themoviedb.org/3/movie/${this.$route.params.id}?api_key=75e981bcdd819c45eea5057ee60c7c36&language=fr-FR&append_to_response=credits`)
-      .then(response => {
+    axios
+      .get(
+        `https://api.themoviedb.org/3/movie/${this.$route.params.id}?api_key=75e981bcdd819c45eea5057ee60c7c36&language=fr-FR&append_to_response=credits`
+      )
+      .then((response) => {
         this.movie = response.data;
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
-  }
+  },
 };
 </script>
 
@@ -71,7 +100,8 @@ export default {
 
 /* Classe pour l'ombre de boîte */
 .shadow-lg {
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 /* Classe pour le conteneur principal */
@@ -119,7 +149,6 @@ export default {
 
 /* Classe pour le conteneur d'acteur */
 
-
 .flex-col {
   flex-direction: column;
 }
@@ -143,6 +172,4 @@ export default {
 .mt-4 {
   margin-top: 1rem;
 }
-
 </style>
-

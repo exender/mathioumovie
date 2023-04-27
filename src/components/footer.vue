@@ -9,13 +9,13 @@
     </div>
   </footer>
 </template>
-  
+
 <script>
 export default {
-  name: 'Footer',
+  name: "Footer",
 };
 </script>
-  
+
 <style scoped>
 /* Style personnalisé pour le footer */
 footer {
@@ -23,4 +23,3 @@ footer {
   color: #fff;
 }
 </style>
-  
