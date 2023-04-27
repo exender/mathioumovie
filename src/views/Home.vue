@@ -55,18 +55,27 @@ export default {
     }
   },
   computed: {
-  sortedMovies: function() {
-    if (this.sortBy === 'alphabetical-order') {
-      // trier les films par ordre alphabétique
-    } else if (this.sortBy) {
-      // trier les films en fonction de la catégorie sélectionnée
-      return this.movies.filter(movie => movie.genre_ids.includes(parseInt(this.sortBy)));
-    } else {
-      // afficher tous les films
-      return this.movies;
-    }
+    sortedMovies: function() {
+  if (this.sortBy === 'alphabetical-order') {
+    // trier les films par ordre alphabétique
+    return this.movies.sort((a, b) => {
+      if (a.title < b.title) {
+        return -1;
+      }
+      if (a.title > b.title) {
+        return 1;
+      }
+      return 0;
+    });
+  } else if (this.sortBy) {
+    // trier les films en fonction de la catégorie sélectionnée
+    return this.movies.filter(movie => movie.genre_ids.includes(parseInt(this.sortBy)));
+  } else {
+    // afficher tous les films
+    return this.movies;
   }
 }
+  }
 };
 </script>
 

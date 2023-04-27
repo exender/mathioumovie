@@ -38,9 +38,9 @@
   this.$emit('sort-by-category', this.selectedCategory);
 },
 
-      sortByAlphabeticalOrder() {
-        this.$emit('sort-by-alphabetical-order');
-      }
+sortByAlphabeticalOrder() {
+  this.$emit('sort-by-alphabetical-order');
+}
     }
   };
   </script>
