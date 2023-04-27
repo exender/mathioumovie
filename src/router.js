@@ -10,7 +10,7 @@ import Home from '@/views/Home.vue';
 import NotFound from '@/views/NotFound.vue';
 
 import ActorView from '@/views/ActorView.vue';
-
+import AllMovies from '@/views/AllMovies.vue';
 
 // Créez une instance de Vue Router avec les routes définies
 const router = createRouter({
@@ -39,6 +39,12 @@ const router = createRouter({
       path: '/actor/:id',
       name: 'ActorView',
       component: ActorView 
+    },
+    // AllMovies
+    {
+      path: '/allmovies',
+      name: 'AllMovies',
+      component: AllMovies
     },
   ]
 });

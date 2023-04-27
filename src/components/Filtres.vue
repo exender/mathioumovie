@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2 class="text-white mb-4">Filtres</h2>
     <div class="flex flex-wrap gap-2">
       <select
         class="bg-gray-700 text-white rounded py-2 px-4"
