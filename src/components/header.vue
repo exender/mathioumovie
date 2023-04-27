@@ -7,52 +7,74 @@
         </router-link>
       </h1>
       <nav class="flex items-center">
-        <input v-model="searchTerm" @input="search"
-          class="bg-gray-800 rounded-full px-6 py-3 mr-4 w-72 focus:outline-none" type="text" placeholder="Rechercher">
-        <button @click="search" class="bg-red-600 text-white px-6 py-3 rounded-full font-bold">Rechercher</button>
+        <input
+          v-model="searchTerm"
+          @input="search"
+          class="bg-gray-800 rounded-full px-6 py-3 mr-4 w-72 focus:outline-none"
+          type="text"
+          placeholder="Rechercher"
+        />
+        <button
+          @click="search"
+          class="bg-red-600 text-white px-6 py-3 rounded-full font-bold"
+        >
+          Rechercher
+        </button>
       </nav>
     </div>
     <!-- Afficher les propositions de recherche sous forme de liste -->
-    <ul v-if="searchResults.length > 0" class="absolute z-10 w-72 mt-2 bg-gray-800 text-white rounded-lg">
-      <li v-for="result in searchResults" :key="result.id" class="px-4 py-2 cursor-pointer hover:bg-gray-700"
-        @click="goToMovieDetails(result.id)">{{ result.title }}</li>
+    <ul
+      v-if="searchResults.length > 0"
+      class="absolute z-10 w-72 mt-2 bg-gray-800 text-white rounded-lg"
+    >
+      <li
+        v-for="result in searchResults"
+        :key="result.id"
+        class="px-4 py-2 cursor-pointer hover:bg-gray-700"
+        @click="goToMovieDetails(result.id)"
+      >
+        {{ result.title }}
+      </li>
     </ul>
   </header>
 </template>
 
 <script>
-import axios from 'axios';
-import router from '../router';
+import axios from "axios";
+import router from "../router";
 export default {
-  name: 'Header',
+  name: "Header",
   data() {
     return {
-      searchTerm: '',
-      searchResults: [] // Tableau pour stocker les résultats de recherche
+      searchTerm: "",
+      searchResults: [], // Tableau pour stocker les résultats de recherche
     };
   },
   methods: {
     search() {
       // Effectuer la recherche avec l'API de TMDB ici
-      axios.get(`https://api.themoviedb.org/3/search/movie?api_key=75e981bcdd819c45eea5057ee60c7c36&query=${this.searchTerm}`)
-        .then(response => {
+      axios
+        .get(
+          `https://api.themoviedb.org/3/search/movie?api_key=75e981bcdd819c45eea5057ee60c7c36&query=${this.searchTerm}`
+        )
+        .then((response) => {
           // Mettre à jour les résultats de recherche avec les données de l'API
-          this.searchResults = response.data.results.map(movie => {
+          this.searchResults = response.data.results.map((movie) => {
             return {
               id: movie.id,
-              title: movie.title
+              title: movie.title,
             };
           });
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
         });
     },
     goToMovieDetails(movieId) {
       // Rediriger vers la page de détails du film en utilisant Vue Router
-      router.push({ name: 'MovieDetails', params: { id: movieId } });
-    }
-  }
+      router.push({ name: "MovieDetails", params: { id: movieId } });
+    },
+  },
 };
 </script>
 
