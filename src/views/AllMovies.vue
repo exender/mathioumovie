@@ -1,41 +1,43 @@
 <template>
-    <div class="bg-gray-100 min-h-screen">
-      <div class="container mx-auto py-8">
-        <h1 class="text-4xl font-bold mb-4 text-center">Tous les films</h1>
-        <Filtres
-          @sortByCategory="sortByCategory"
-          @sortByAlphabeticalOrder="sortByAlphabeticalOrder"
-          class="mb-8"
+  <div class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto py-8">
+      <h1 class="text-4xl font-bold mb-4 text-center">Tous les films</h1>
+      <Filtres
+        @sortByCategory="sortByCategory"
+        @sortByAlphabeticalOrder="sortByAlphabeticalOrder"
+        class="mb-8"
+      />
+      <div
+        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8"
+      >
+        <MovieCard
+          v-for="movie in filteredMovies"
+          :key="movie.id"
+          :movie="movie"
+          @viewMovieDetails="viewMovieDetails"
         />
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
-            <MovieCard
-  v-for="movie in filteredMovies"
-  :key="movie.id"
-  :movie="movie"
-  @viewMovieDetails="viewMovieDetails"
-/>
-        </div>
-        <div class="flex justify-center mt-8">
-          <button
-            class="bg-gray-800 text-white px-4 py-2 rounded mr-2"
-            @click="loadPreviousPage"
-            :disabled="page <= 1"
-          >
-            Page précédente
-          </button>
-          <button
-            class="bg-gray-800 text-white px-4 py-2 rounded"
-            @click="loadNextPage"
-            :disabled="page >= total_pages"
-          >
-            Page suivante
-          </button>
-        </div>
+      </div>
+      <div class="flex justify-center mt-8">
+        <button
+          class="bg-gray-800 text-white px-4 py-2 rounded mr-2"
+          @click="loadPreviousPage"
+          :disabled="page <= 1"
+        >
+          Page précédente
+        </button>
+        <button
+          class="bg-gray-800 text-white px-4 py-2 rounded"
+          @click="loadNextPage"
+          :disabled="page >= total_pages"
+        >
+          Page suivante
+        </button>
       </div>
     </div>
-  </template>
-  
-  <script>
+  </div>
+</template>
+
+<script>
 import axios from "axios";
 import MovieCard from "@/components/MovieCard.vue";
 import Filtres from "@/components/Filtres.vue";

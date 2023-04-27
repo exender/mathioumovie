@@ -99,7 +99,6 @@ export default {
     },
   },
 };
-
 </script>
 <style scoped>
 /* Style personnalisé pour l'en-tête */

@@ -59,19 +59,19 @@ export default {
     },
   },
   filterMoviesByCategory(category) {
-  if (category === "") {
-    this.filteredMovies = this.movies;
-  } else {
-    this.filteredMovies = this.movies.filter((movie) =>
-      movie.genre_ids.includes(category)
-    );
-  }
-},
-sortByCategory(category) {
-  this.sortBy = category;
-  this.page = 1;
-  this.filterMoviesByCategory(category);
-},
+    if (category === "") {
+      this.filteredMovies = this.movies;
+    } else {
+      this.filteredMovies = this.movies.filter((movie) =>
+        movie.genre_ids.includes(category)
+      );
+    }
+  },
+  sortByCategory(category) {
+    this.sortBy = category;
+    this.page = 1;
+    this.filterMoviesByCategory(category);
+  },
 };
 </script>
 
