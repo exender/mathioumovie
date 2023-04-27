@@ -13,6 +13,7 @@
           class="bg-gray-800 rounded-full px-6 py-3 mr-4 w-72 focus:outline-none"
           type="text"
           placeholder="Rechercher"
+          ref="searchInput"
         />
         <button
           @click="search"
@@ -26,6 +27,7 @@
     <ul
       v-if="searchResults.length > 0"
       class="absolute z-10 w-72 mt-2 bg-gray-800 text-white rounded-lg"
+      ref="searchResultsList"
     >
       <li
         v-for="result in searchResults"
@@ -50,6 +52,16 @@ export default {
       searchResults: [], // Tableau pour stocker les résultats de recherche
     };
   },
+  mounted() {
+    // Ajouter un écouteur d'événements pour effacer la liste de propositions de résultats
+    document.addEventListener("click", this.handleClickOutside);
+    document.addEventListener("keydown", this.handleEscapeKey);
+  },
+  beforeUnmount() {
+    // Retirer les écouteurs d'événements pour nettoyer
+    document.removeEventListener("click", this.handleClickOutside);
+    document.removeEventListener("keydown", this.handleEscapeKey);
+  },
   methods: {
     search() {
       // Effectuer la recherche avec l'API de TMDB ici
@@ -58,26 +70,37 @@ export default {
           `https://api.themoviedb.org/3/search/movie?api_key=75e981bcdd819c45eea5057ee60c7c36&query=${this.searchTerm}`
         )
         .then((response) => {
-          // Mettre à jour les résultats de recherche avec les données de l'API
-          this.searchResults = response.data.results.map((movie) => {
-            return {
-              id: movie.id,
-              title: movie.title,
-            };
-          });
+          this.searchResults = response.data.results;
         })
         .catch((error) => {
-          console.error(error);
+          console.log(error);
         });
     },
-    goToMovieDetails(movieId) {
-      // Rediriger vers la page de détails du film en utilisant Vue Router
-      router.push({ name: "MovieDetails", params: { id: movieId } });
+    handleClickOutside(event) {
+      // Fermer la liste de propositions de résultats si l'utilisateur clique en dehors
+      if (
+        this.$refs.searchResultsList &&
+        !this.$refs.searchResultsList.contains(event.target) &&
+        this.$refs.searchInput !== event.target
+      ) {
+        this.searchResults = [];
+      }
+    },
+    handleEscapeKey(event) {
+      // Fermer la liste de propositions de résultats si l'utilisateur appuie sur la touche "Escape"
+      if (event.key === "Escape") {
+        this.searchResults = [];
+      }
+    },
+    goToMovieDetails(id) {
+      // Aller à la page des détails du film sélectionné
+      this.searchResults = []; // Effacer la liste de propositions de résultats
+      router.push(`/movie/${id}`);
     },
   },
 };
-</script>
 
+</script>
 <style scoped>
 /* Style personnalisé pour l'en-tête */
 header {

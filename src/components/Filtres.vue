@@ -37,7 +37,7 @@ export default {
     };
   },
   mounted() {
-    // Récupérer la liste des catégories de films depuis l'API de TMDB
+    // Récupérer la liste des catégories de films depuis l'API de TMDB */
     axios
       .get(
         `https://api.themoviedb.org/3/genre/movie/list?api_key=75e981bcdd819c45eea5057ee60c7c36&language=fr-FR`
@@ -58,6 +58,20 @@ export default {
       this.$emit("sort-by-alphabetical-order");
     },
   },
+  filterMoviesByCategory(category) {
+  if (category === "") {
+    this.filteredMovies = this.movies;
+  } else {
+    this.filteredMovies = this.movies.filter((movie) =>
+      movie.genre_ids.includes(category)
+    );
+  }
+},
+sortByCategory(category) {
+  this.sortBy = category;
+  this.page = 1;
+  this.filterMoviesByCategory(category);
+},
 };
 </script>
 

@@ -8,12 +8,12 @@
           class="mb-8"
         />
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-8">
-          <MovieCard
-            v-for="movie in sortedMovies"
-            :key="movie.id"
-            :movie="movie"
-            @viewMovieDetails="viewMovieDetails"
-          />
+            <MovieCard
+  v-for="movie in filteredMovies"
+  :key="movie.id"
+  :movie="movie"
+  @viewMovieDetails="viewMovieDetails"
+/>
         </div>
         <div class="flex justify-center mt-8">
           <button
@@ -47,13 +47,15 @@
       Filtres,
     },
     data() {
-      return {
-        movies: [],
-        sortBy: null,
-        page: 1,
-        total_pages: 1,
-      };
-    },
+  return {
+    movies: [],
+    sortBy: null,
+    page: 1,
+    total_pages: 1,
+    filteredMovies: [],
+  };
+},
+
     mounted() {
       this.loadPage(this.page);
     },
@@ -72,18 +74,20 @@
         this.loadPage(this.page);
       },
       loadPage(page) {
-        axios
-          .get(
-            `https://api.themoviedb.org/3/movie/popular?api_key=75e981bcdd819c45eea5057ee60c7c36&language=fr-FR&page=${page}`
-          )
-          .then((response) => {
-            this.movies = response.data.results;
-            this.total_pages = response.data.total_pages;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      },
+  axios
+    .get(
+      `https://api.themoviedb.org/3/movie/popular?api_key=75e981bcdd819c45eea5057ee60c7c36&language=fr-FR&page=${page}`
+    )
+    .then((response) => {
+      this.movies = response.data.results;
+      this.total_pages = response.data.total_pages;
+      this.filteredMovies = this.movies;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+},
+
       loadPreviousPage() {
         if (this.page > 1) {
           this.page--;
